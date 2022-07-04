@@ -6,7 +6,7 @@ import {
   textEditorState
 } from "../../../formatter.state/formatter.state";
 import { Button, Group, SimpleGrid } from "@mantine/core";
-import React, { useEffect, useMemo } from "react";
+import React, { useDeferredValue, useEffect, useMemo } from "react";
 import { parse } from "node-html-parser";
 import { convert } from "../../../formatter.services/formatter-tools.service";
 import { RichTextEditor } from "@mantine/rte";
@@ -65,6 +65,13 @@ export const EditorPanel = () => {
 
   const mentions = useMemo(mentionsConfig, [notation]);
 
+  const modules = useMemo(
+    () => ({
+      history: { delay: 400, userOnly: true },
+    }),
+    []
+  );
+
   return (
     <SimpleGrid>
       <ControlPanel/>
@@ -73,6 +80,7 @@ export const EditorPanel = () => {
         value={text}
         onChange={setText}
         mentions={mentions}
+        modules={modules}
       />
     </SimpleGrid>
   )

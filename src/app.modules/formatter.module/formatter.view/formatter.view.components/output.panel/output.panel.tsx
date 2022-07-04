@@ -1,11 +1,13 @@
 import { useRecoilState } from "recoil";
 import { convertResultState } from "../../../formatter.state/formatter.state";
 import { Button, Group, JsonInput, SimpleGrid } from "@mantine/core";
-import React from "react";
+import React, { useDeferredValue } from "react";
 
 export const OutputPanel = () => {
 
   const [ convertResult ] = useRecoilState(convertResultState);
+  const deferredConvertResult = useDeferredValue(convertResult);
+
 
   const ControlPanel = () => {
     return (
@@ -23,7 +25,7 @@ export const OutputPanel = () => {
       <JsonInput
         minRows={28}
         placeholder={`{}`}
-        value={convertResult}
+        value={deferredConvertResult}
         validationError='Неверный формат JSON'
         formatOnBlur
       />
