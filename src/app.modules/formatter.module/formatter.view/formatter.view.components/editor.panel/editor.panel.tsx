@@ -24,13 +24,12 @@ export const EditorPanel = (props: { controlPanel?: boolean }) => {
 
   const onClearButtonClick = () => {
     setText('');
-    setText('');
   };
 
   const ControlPanel = () => {
     return (
       <Group>
-        <Button onClick={onClearButtonClick}>
+        <Button onClick={onClearButtonClick} color={'gray'}>
           Очистить
         </Button>
       </Group>
