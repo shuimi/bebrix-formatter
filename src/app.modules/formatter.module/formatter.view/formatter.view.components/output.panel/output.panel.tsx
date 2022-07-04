@@ -1,13 +1,13 @@
 import { useRecoilState } from "recoil";
 import { convertResultState } from "../../../formatter.state/formatter.state";
-import { Button, Group, JsonInput, SimpleGrid } from "@mantine/core";
+import { Button, Group, SimpleGrid } from "@mantine/core";
 import React, { useDeferredValue } from "react";
+import { Prism } from "@mantine/prism";
 
-export const OutputPanel = () => {
+export const OutputPanel = (props: { controlPanel?: boolean }) => {
 
   const [ convertResult ] = useRecoilState(convertResultState);
   const deferredConvertResult = useDeferredValue(convertResult);
-
 
   const ControlPanel = () => {
     return (
@@ -21,14 +21,18 @@ export const OutputPanel = () => {
 
   return (
     <SimpleGrid>
-      <ControlPanel/>
-      <JsonInput
-        minRows={28}
-        placeholder={`{}`}
-        value={deferredConvertResult}
-        validationError='Неверный формат JSON'
-        formatOnBlur
-      />
+      {
+        props.controlPanel && <ControlPanel/>
+      }
+      <Prism
+        language={'json'}
+        copyLabel={'Копировать'}
+        copiedLabel={'Скопировано'}
+        withLineNumbers
+        trim
+      >
+        {deferredConvertResult}
+      </Prism>
     </SimpleGrid>
   )
 }

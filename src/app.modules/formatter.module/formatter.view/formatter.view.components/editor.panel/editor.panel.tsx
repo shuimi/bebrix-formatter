@@ -6,12 +6,12 @@ import {
   textEditorState
 } from "../../../formatter.state/formatter.state";
 import { Button, Group, SimpleGrid } from "@mantine/core";
-import React, { useDeferredValue, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { parse } from "node-html-parser";
 import { convert } from "../../../formatter.services/formatter-tools.service";
 import { RichTextEditor } from "@mantine/rte";
 
-export const EditorPanel = () => {
+export const EditorPanel = (props: { controlPanel?: boolean }) => {
 
   const [ text, setText ] = useRecoilState(textEditorState);
   const setConvertResult = useSetRecoilState(convertResultState);
@@ -74,7 +74,9 @@ export const EditorPanel = () => {
 
   return (
     <SimpleGrid>
-      <ControlPanel/>
+      {
+        props.controlPanel && <ControlPanel/>
+      }
       <RichTextEditor
         styles={{ toolbar: { display: 'none' } }}
         value={text}
