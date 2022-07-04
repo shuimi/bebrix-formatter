@@ -39,13 +39,13 @@ export const partition = (data: string[], partitionPointer: string) => {
   return partitions.filter(partition => partition.length !== 0);
 }
 
-export const build = (data: string[], notation: Record<string, string>) => {
+export const build = (data: string[], notation: Record<string, string>, mentionDenotationChar: string) => {
   const dataObject: Record<string, string> = {};
 
   data.forEach(record => {
     for (let [ propertyName, tagName ] of Object.entries(notation)) {
       if (record.includes(tagName)) {
-        const cleanRecord = record.replace(tagName, '').trim();
+        const cleanRecord = record.replace(`${mentionDenotationChar}${tagName}`, '').trim();
         dataObject[propertyName] = cleanRecord;
         break;
       }
@@ -59,8 +59,8 @@ export const isolate = (data: string[]) => {
   return data.filter(record => !!record)
 }
 
-export const mapBuild = (data: string[][], notation: Record<string, string>) => {
-  return data.map(record => build(record, notation));
+export const mapBuild = (data: string[][], notation: Record<string, string>, mentionDenotationChar: string) => {
+  return data.map(record => build(record, notation, mentionDenotationChar));
 }
 
 export const prepareJson = (dataObjects: Object[], space: number) => {
@@ -72,7 +72,8 @@ export const convert = (
   notation: Record<string, string>,
   splitter: string,
   partitionPointer: string,
-  jsonIndent: number
+  jsonIndent: number,
+  mentionDenotationChar: string,
 ) => prepareJson(
   mapBuild(
     partition(
@@ -83,7 +84,8 @@ export const convert = (
       ),
       partitionPointer
     ),
-    notation
+    notation,
+    mentionDenotationChar
   ),
   jsonIndent
 )

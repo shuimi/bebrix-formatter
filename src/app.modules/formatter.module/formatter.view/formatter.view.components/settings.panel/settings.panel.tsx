@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
-import { Button, Card, Group, Modal } from "@mantine/core";
+import { Button, Card, Group, Modal, Text } from "@mantine/core";
 import { Settings } from "tabler-icons-react";
 import { NotationSettings } from "./settings.modal";
+import { NotImplementedAlert } from "../../../../app.module/app.components/not-implemented.alert";
 
 export const SettingsPanel = () => {
   const [ notationSettingsModalOpened, setNotationSettingsModalOpened ] = useState(false);
@@ -19,6 +20,12 @@ export const SettingsPanel = () => {
   const OptionsPanel = () => {
     return (
       <Card my={'md'}>
+        <Text size={'xs'} style={{
+          position: 'absolute',
+          zIndex: '100',
+          right: '1em',
+          bottom: '1em'
+        }}>© Vladimir Shustov 2022, v.1.0.0, license: MIT</Text>
         <Group>
           <SettingsButton
             onClick={() => setNotationSettingsModalOpened(true)}
@@ -56,16 +63,20 @@ export const SettingsPanel = () => {
         <Modal
           opened={jsonNotationOpened}
           onClose={() => setJsonNotationOpened(false)}
-          title='Настройки нотации'
+          title='Not implemented'
         >
-          TEST
+          <NotImplementedAlert title={'Будет реализовано позднее'}>
+            Данная функциональность будет реализована позднее
+          </NotImplementedAlert>
         </Modal>
         <Modal
           opened={parserOptionsOpened}
           onClose={() => setParserOptionsOpened(false)}
-          title='Настройки нотации'
+          title='Not implemented'
         >
-          TEST
+          <NotImplementedAlert title={'Будет реализовано позднее'}>
+            Данная функциональность будет реализована позднее
+          </NotImplementedAlert>
         </Modal>
       </>
     )

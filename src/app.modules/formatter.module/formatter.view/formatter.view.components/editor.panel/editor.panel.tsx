@@ -37,15 +37,9 @@ export const EditorPanel = (props: { controlPanel?: boolean }) => {
   }
 
   useEffect(() => {
-    const savedText = text;
-    setText(() => '\n');
-    setText(() => savedText);
-  }, [ notation ])
-
-  useEffect(() => {
     const root = parse(text);
     const data = root.querySelectorAll('p').map(p => p.text);
-    const convertedData = convert(data, notation, splitter, partitionPointer, jsonIndent);
+    const convertedData = convert(data, notation, splitter, partitionPointer, jsonIndent, '@');
     setConvertResult(convertedData);
   }, [ text, notation ])
 
