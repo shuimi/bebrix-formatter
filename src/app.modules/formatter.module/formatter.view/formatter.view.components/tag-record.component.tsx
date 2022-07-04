@@ -1,12 +1,12 @@
 import { ActionIcon, Group, Input, Paper } from "@mantine/core";
 import { Trash } from "tabler-icons-react";
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 
 export const TagRecord = (props: {
   tag: string,
   field: string,
-  onTagChange?: () => void,
-  onFieldChange?: () => void,
+  onTagChange?: ChangeEventHandler<HTMLInputElement>,
+  onFieldChange?: ChangeEventHandler<HTMLInputElement>,
   onDelete?: () => void,
 }) => {
   return (

@@ -36,7 +36,7 @@ export const targetNotationTypesSelector = selector({
     let iteration: number = 1;
 
     for (let [, tagName ] of Object.entries(notation)) {
-      targetTypes.push({id: iteration, value: `@${tagName}`})
+      targetTypes.push({id: iteration, value: tagName })
       iteration++;
     }
 
@@ -51,7 +51,7 @@ export const splitterState = atom<string>({
 
 export const partitionPointerState = atom<string>({
   key: 'PARTITION_POINTER',
-  default: '@Текст',
+  default: 'Текст',
 });
 
 export const jsonIndentState = atom<number>({

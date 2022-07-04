@@ -41,18 +41,20 @@ export const EditorPanel = () => {
     setConvertResult(convertedData);
   }, [ text ])
 
+  const mentionsMiddleware = (searchTerm: any, renderList: any, mentionChar: any) => {
+    const includesSearchTerm = targetNotationTypes.filter((item) =>
+      item.value.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    renderList(includesSearchTerm);
+  }
+
   const mentionsConfig = () => ({
     allowedChars: /^[ЁёА-я]*$/,
     mentionDenotationChars: [ '@' ],
-    source: (searchTerm: any, renderList: any, mentionChar: any) => {
-      const includesSearchTerm = targetNotationTypes.filter((item) =>
-        item.value.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      renderList(includesSearchTerm);
-    },
-  })
+    source: mentionsMiddleware,
+  });
 
-  const mentions = useMemo(mentionsConfig, []);
+  const mentions = useMemo(mentionsConfig, [notation]);
 
   return (
     <SimpleGrid>
