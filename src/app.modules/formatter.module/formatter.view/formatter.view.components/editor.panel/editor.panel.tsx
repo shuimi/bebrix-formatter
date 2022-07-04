@@ -22,7 +22,10 @@ export const EditorPanel = () => {
   const [ jsonIndent, setJsonIndent ] = useRecoilState(jsonIndentState);
   const targetNotationTypes = useRecoilValue(targetNotationTypesSelector);
 
-  const onClearButtonClick = () => setText('');
+  const onClearButtonClick = () => {
+    setText('');
+    setText('');
+  };
 
   const ControlPanel = () => {
     return (
@@ -35,11 +38,17 @@ export const EditorPanel = () => {
   }
 
   useEffect(() => {
+    const savedText = text;
+    setText(() => '\n');
+    setText(() => savedText);
+  }, [ notation ])
+
+  useEffect(() => {
     const root = parse(text);
     const data = root.querySelectorAll('p').map(p => p.text);
     const convertedData = convert(data, notation, splitter, partitionPointer, jsonIndent);
     setConvertResult(convertedData);
-  }, [ text ])
+  }, [ text, notation ])
 
   const mentionsMiddleware = (searchTerm: any, renderList: any, mentionChar: any) => {
     const includesSearchTerm = targetNotationTypes.filter((item) =>
