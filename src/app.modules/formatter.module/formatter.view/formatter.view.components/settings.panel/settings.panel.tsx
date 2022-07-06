@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
-import { Button, Card, Group, Modal, Text } from "@mantine/core";
-import { Settings } from "tabler-icons-react";
+import { ActionIcon, Button, Card, Group, Modal, Text, useMantineColorScheme } from "@mantine/core";
+import { MoonStars, Settings, Sun } from "tabler-icons-react";
 import { NotationSettings } from "./settings.modal";
 import { NotImplementedAlert } from "../../../../app.module/app.components/not-implemented.alert";
 
@@ -8,6 +8,18 @@ export const SettingsPanel = () => {
   const [ notationSettingsModalOpened, setNotationSettingsModalOpened ] = useState(false);
   const [ jsonNotationOpened, setJsonNotationOpened ] = useState(false);
   const [ parserOptionsOpened, setParserOptionsOpened ] = useState(false);
+
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === 'dark';
+
+  const ColorSchemeActionIcon = () => <ActionIcon
+    variant="outline"
+    color={dark ? 'yellow' : 'blue'}
+    onClick={() => toggleColorScheme()}
+    title="Toggle color scheme"
+  >
+    {dark ? <Sun size={18} /> : <MoonStars size={18} />}
+  </ActionIcon>;
 
   const SettingsButton: FC<any> = ({ icon, onClick, children }: {
     icon: any,
@@ -45,6 +57,7 @@ export const SettingsPanel = () => {
           >
             Параметры JSON
           </SettingsButton>
+          <ColorSchemeActionIcon/>
         </Group>
       </Card>
     )
