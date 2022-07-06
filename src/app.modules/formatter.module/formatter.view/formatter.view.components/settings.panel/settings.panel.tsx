@@ -1,8 +1,9 @@
 import React, { FC, useState } from "react";
-import { ActionIcon, Button, Card, Group, Modal, Text, useMantineColorScheme } from "@mantine/core";
+import { ActionIcon, Button, Modal, useMantineColorScheme } from "@mantine/core";
 import { MoonStars, Settings, Sun } from "tabler-icons-react";
 import { NotationSettings } from "./settings.modal";
 import { NotImplementedAlert } from "../../../../app.module/app.components/not-implemented.alert";
+import { PanelLayout } from "../../formatter.view.layouts/panel.layout";
 
 export const SettingsPanel = () => {
   const [ notationSettingsModalOpened, setNotationSettingsModalOpened ] = useState(false);
@@ -31,35 +32,27 @@ export const SettingsPanel = () => {
 
   const OptionsPanel = () => {
     return (
-      <Card my={'md'}>
-        <Text size={'xs'} style={{
-          position: 'absolute',
-          zIndex: '100',
-          right: '1em',
-          bottom: '1em'
-        }}>© Vladimir Shustov 2022, v.1.0.0, license: MIT</Text>
-        <Group>
-          <SettingsButton
-            onClick={() => setNotationSettingsModalOpened(true)}
-            icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
-          >
-            Настройки нотации
-          </SettingsButton>
-          <SettingsButton
-            onClick={() => setJsonNotationOpened(true)}
-            icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
-          >
-            Параметры парсера
-          </SettingsButton>
-          <SettingsButton
-            onClick={() => setParserOptionsOpened(true)}
-            icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
-          >
-            Параметры JSON
-          </SettingsButton>
-          <ColorSchemeActionIcon/>
-        </Group>
-      </Card>
+      <PanelLayout withCopyright>
+        <SettingsButton
+          onClick={() => setNotationSettingsModalOpened(true)}
+          icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
+        >
+          Настройки нотации
+        </SettingsButton>
+        <SettingsButton
+          onClick={() => setJsonNotationOpened(true)}
+          icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
+        >
+          Параметры парсера
+        </SettingsButton>
+        <SettingsButton
+          onClick={() => setParserOptionsOpened(true)}
+          icon={<Settings strokeWidth={2} color={'#FFFFFF'}/>}
+        >
+          Параметры JSON
+        </SettingsButton>
+        <ColorSchemeActionIcon/>
+      </PanelLayout>
     )
   }
 
