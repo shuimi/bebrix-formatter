@@ -1,8 +1,6 @@
-import React from 'react';
-import { createStyles, Box, Text, Group } from '@mantine/core';
-import { ListSearch } from 'tabler-icons-react';
+import { createStyles } from "@mantine/core";
 
-const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles((theme) => ({
   link: {
     ...theme.fn.focusStyles(),
     display: 'block',
@@ -35,32 +33,3 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-interface TableOfContentsProps {
-  links: { label: string; link: string; order: number }[];
-  active: string;
-}
-
-export function TableOfContents({ links, active }: TableOfContentsProps) {
-  const { classes, cx } = useStyles();
-
-  const items = links.map((item) => (
-    <Box
-      key={item.label}
-      className={cx(classes.link, { [classes.linkActive]: active === item.link })}
-      sx={(theme) => ({ paddingLeft: item.order * theme.spacing.md })}
-    >
-      {item.label}
-    </Box>
-  ));
-
-  return (
-    <div style={{ marginTop: '1em' }}>
-      <Group mb="md">
-        <ListSearch size={18}/>
-        <Text>Вкладки</Text>
-      </Group>
-      {items}
-    </div>
-  );
-}
