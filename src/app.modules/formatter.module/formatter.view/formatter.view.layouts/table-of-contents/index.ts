@@ -1,0 +1,1 @@
+export { TableOfContents } from './content/table-of-contents.layout';

@@ -1,0 +1,1 @@
+export { TwoSideEditorLayout } from './content/two-side-editor.layout'

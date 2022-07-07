@@ -1,33 +1,10 @@
 import React, { ReactNode } from 'react';
-import { Text, Group, Button, createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
-import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
+import { Text, Group, Button, MantineTheme, useMantineTheme } from '@mantine/core';
+import { Dropzone, DropzoneStatus, DropzoneProps } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
-import { DropzoneProps } from '@mantine/dropzone/lib/Dropzone/Dropzone';
+import { useStyles } from "./dropzone.style";
 
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    marginBottom: 30,
-  },
-
-  dropzone: {
-    borderWidth: 1,
-    paddingBottom: 50,
-  },
-
-  icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
-  },
-
-  control: {
-    position: 'absolute',
-    width: 250,
-    left: 'calc(50% - 125px)',
-    bottom: -20,
-  },
-}));
-
-const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
+export const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
   return status.accepted
     ? theme.colors[theme.primaryColor][6]
     : status.rejected
@@ -87,7 +64,7 @@ export const DropzoneLayout = (props: DropzoneLayoutProps) => {
       <Button
         onClick={onDropButtonClick}
         className={classes.control}
-        radius='xl'
+        radius={'xl'}
         color={'gray'}
       >
         {props.selectCall}

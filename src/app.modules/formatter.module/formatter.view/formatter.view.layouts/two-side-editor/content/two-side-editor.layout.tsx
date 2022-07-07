@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Grid } from "@mantine/core";
+import React, { ReactNode } from 'react';
+import { Grid } from '@mantine/core';
 
 export const TwoSideEditorLayout = (props: { leftSlot: ReactNode, rightSlot: ReactNode }) => {
   return (

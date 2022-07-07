@@ -1,13 +1,7 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode } from 'react';
 import { Card, Text, Group, GroupProps } from '@mantine/core';
-import { COPYRIGHT_TEXT } from "../../../app.module/app.assets/texts.asset";
-
-const CopyrightTextStyle: Record<string, string | number> = {
-  position: 'absolute',
-  zIndex: '100',
-  right: '1em',
-  bottom: '1em',
-}
+import { COPYRIGHT_TEXT } from '../../../../../app.module/app.assets/texts.asset';
+import { CopyrightTextStyle } from './copyright-text.style';
 
 interface PanelLayoutProps extends GroupProps {
   children: ReactNode,

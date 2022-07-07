@@ -1,4 +1,4 @@
-export {TwoSideEditorLayout} from './two-side-editor.layout';
-export * from './table-of-contents/table-of-contents.layout';
-export * from './dropzone.layout';
-export * from './panel.layout';
+export { TwoSideEditorLayout } from './two-side-editor';
+export { TableOfContents } from './table-of-contents';
+export { DropzoneLayout } from './dropzone';
+export { PanelLayout } from './panel';

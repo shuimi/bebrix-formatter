@@ -1,0 +1,1 @@
+export { DropzoneLayout } from './content/dropzone.layout';
