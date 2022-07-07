@@ -1,23 +1,28 @@
-import React, { FC, useState } from "react";
-import { ActionIcon, Button, Modal, useMantineColorScheme } from "@mantine/core";
-import { MoonStars, Settings, Sun } from "tabler-icons-react";
-import { NotationSettings } from "./settings.modal";
-import { NotImplementedAlert } from "../../../../app.module/app.components/not-implemented.alert";
-import { PanelLayout } from "../../formatter.view.layouts/panel.layout";
+import React, { FC, useRef, useState } from 'react';
+import { ActionIcon, Button, Drawer, Modal, useMantineColorScheme } from '@mantine/core';
+import { MoonStars, Settings, Sun, Upload } from 'tabler-icons-react';
+import { NotationSettings } from './settings.modal';
+import { NotImplementedAlert } from '../../../../app.module/app.components/not-implemented.alert';
+import { PanelLayout, DropzoneLayout } from '../../formatter.view.layouts';
 
 export const SettingsPanel = () => {
+
+  const openRef = useRef<any>();
+
   const [ notationSettingsModalOpened, setNotationSettingsModalOpened ] = useState(false);
   const [ jsonNotationOpened, setJsonNotationOpened ] = useState(false);
   const [ parserOptionsOpened, setParserOptionsOpened ] = useState(false);
+
+  const [drawerOpened, setDrawerOpened] = useState(false);
 
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const dark = colorScheme === 'dark';
 
   const ColorSchemeActionIcon = () => <ActionIcon
-    variant="outline"
+    variant='outline'
     color={dark ? 'yellow' : 'blue'}
     onClick={() => toggleColorScheme()}
-    title="Toggle color scheme"
+    title='Toggle color scheme'
   >
     {dark ? <Sun size={18} /> : <MoonStars size={18} />}
   </ActionIcon>;
@@ -29,6 +34,30 @@ export const SettingsPanel = () => {
   }) => <Button style={{ background: '#2f2f36', fontWeight: 'normal', }} leftIcon={icon} onClick={onClick}>
     {children}
   </Button>
+
+  const UploadDrawer = () => {
+    return (
+      <Drawer
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        title='Загрузить файл'
+        padding='xl'
+        size='xl'
+      >
+        <DropzoneLayout
+          openRef={openRef}
+          onDrop={() => {
+          }}
+          maxSize={500 * 1024 ** 2}
+          description={'Загрузите сюда файл в формате .json или .txt, файл должен быть не более 500Mb'}
+          dropFilesCall={'Перетащите файл сюда'}
+          rejectedMessage={'Файл слишком большой'}
+          selectCall={'Выберите файл'}
+          title={'Загрузить файл'}
+        />
+      </Drawer>
+    )
+  }
 
   const OptionsPanel = () => {
     return (
@@ -88,9 +117,22 @@ export const SettingsPanel = () => {
     )
   }
 
+  const Drawers = () => {
+    return (
+      <UploadDrawer/>
+    )
+  }
+
   return (
     <>
       <Modals/>
+      <SettingsButton
+        onClick={() => setDrawerOpened(true)}
+        icon={<Upload strokeWidth={2} color={'#FFFFFF'}/>}
+      >
+        Загрузить файл
+      </SettingsButton>
+      <Drawers/>
       <OptionsPanel/>
     </>
   )
