@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@mantine/core": "^4.2.12",
+    "@mantine/dropzone": "^4.2.12",
     "@mantine/hooks": "^4.2.12",
     "@mantine/prism": "^4.2.12",
     "@mantine/rte": "^4.2.11",

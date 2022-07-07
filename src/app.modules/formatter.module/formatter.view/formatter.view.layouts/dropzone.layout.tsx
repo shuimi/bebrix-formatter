@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { ReactNode } from 'react';
 import { Text, Group, Button, createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
-import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
+import { Dropzone, DropzoneStatus } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
+import { DropzoneProps } from '@mantine/dropzone/lib/Dropzone/Dropzone';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -36,51 +37,60 @@ const getActiveColor = (status: DropzoneStatus, theme: MantineTheme) => {
         : theme.black;
 }
 
-export const DropzoneLayout = () => {
+interface DropzoneLayoutProps extends Omit<DropzoneProps, 'children'> {
+  description: ReactNode,
+  title: ReactNode,
+  selectCall: ReactNode,
+  dropFilesCall: ReactNode,
+  rejectedMessage: ReactNode,
+}
+
+export const DropzoneLayout = (props: DropzoneLayoutProps) => {
 
   const theme = useMantineTheme();
   const { classes } = useStyles();
-  const openRef = useRef<() => void>();
+
+  // @ts-ignore
+  const onDropButtonClick = () => props.openRef?.current();
+
+  const DropzoneContent = (status: DropzoneStatus) => {
+
+    const Message = status.accepted
+      ? props.dropFilesCall
+      : status.rejected
+        ? props.rejectedMessage
+        : props.title;
+
+    return <div style={{ pointerEvents: 'none' }}>
+      <Group position='center'>
+        <CloudUpload size={50} color={getActiveColor(status, theme)}/>
+      </Group>
+      <Text align='center' weight={700} size='lg' mt='xl' sx={{ color: getActiveColor(status, theme) }}>
+        {Message}
+      </Text>
+      <Text align='center' size='sm' mt='xs' color='dimmed'>
+        {props.description}
+      </Text>
+    </div>
+  }
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
-        // @ts-ignore
-        openRef={openRef}
-        onDrop={() => {}}
+        openRef={props.openRef}
+        onDrop={props.onDrop}
         className={classes.dropzone}
-        radius="md"
-        accept={[MIME_TYPES.pdf]}
-        maxSize={30 * 1024 ** 2}
+        radius={'md'}
       >
-        {(status) => (
-          <div style={{ pointerEvents: 'none' }}>
-            <Group position="center">
-              <CloudUpload size={50} color={getActiveColor(status, theme)} />
-            </Group>
-            <Text
-              align="center"
-              weight={700}
-              size="lg"
-              mt="xl"
-              sx={{ color: getActiveColor(status, theme) }}
-            >
-              {status.accepted
-                ? 'Drop files here'
-                : status.rejected
-                  ? 'Pdf file less than 30mb'
-                  : 'Upload resume'}
-            </Text>
-            <Text align="center" size="sm" mt="xs" color="dimmed">
-              Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
-              are less than 30mb in size.
-            </Text>
-          </div>
-        )}
+        {DropzoneContent}
       </Dropzone>
-      {/*// @ts-ignore*/}
-      <Button className={classes.control} size="md" radius="xl" onClick={() => openRef.current()}>
-        Select files
+      <Button
+        onClick={onDropButtonClick}
+        className={classes.control}
+        radius='xl'
+        color={'gray'}
+      >
+        {props.selectCall}
       </Button>
     </div>
   );
