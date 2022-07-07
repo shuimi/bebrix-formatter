@@ -8,7 +8,7 @@ import fontHeavy from "../app.assets/fonts/GreycliffCF-Heavy.woff2";
 export const MANTINE_DEFAULT_PROPS = {
   Container: {
     sizes: {
-      md: 1280,
+      md: 1360,
     },
   },
 }
